@@ -260,7 +260,7 @@ Property definitions should be used in place of naked instance variables wheneve
 **For example:**
 
 ```objc
-@interface NYTSection: NSObject
+@interface TMFSection: NSObject
 
 @property (nonatomic) NSString *headline;
 
@@ -270,7 +270,7 @@ Property definitions should be used in place of naked instance variables wheneve
 **Not:**
 
 ```objc
-@interface NYTSection : NSObject {
+@interface TMFSection : NSObject {
     NSString *headline;
 }
 ```
@@ -293,12 +293,12 @@ UIButton *settingsButton;
 UIButton *setBut;
 ```
 
-A three letter prefix (e.g. `NYT`) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
+A three letter prefix (e.g. `TMF`) should always be used for class names and constants, however may be omitted for Core Data entity names. Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
 
 **For example:**
 
 ```objc
-static const NSTimeInterval NYTArticleViewControllerNavigationFadeAnimationDuration = 0.3;
+static const NSTimeInterval TMFArticleViewControllerNavigationFadeAnimationDuration = 0.3;
 ```
 
 **Not:**
@@ -344,6 +344,31 @@ Block comments should generally be avoided, as code should be as self-documentin
         // Custom initialization
     }
 
+    return self;
+}
+```
+Instance subclasses may be in an inconsistent state during init method execution, so code in those methods should avoid invoking accessors.
+Subclasses have not yet been initialized when init methods execute, making accessor methods potentially unreliable. Whenever practical, directly assign to and release ivars in those methods rather than rely on accessors.
+
+**For example:**
+```objc
+- (instancetype)init {
+    self = [super init]; // or call the designated initalizer
+    if (self) {
+       _bar = [[NSMutableString alloc] init];
+    }
+    return self;
+}
+```
+
+**Not:**
+
+```objc
+- (instancetype)init {
+    self = [super init]; // or call the designated initalizer
+    if (self) {
+       self.bar = [[NSMutableString alloc] init];
+    }
     return self;
 }
 ```
@@ -405,9 +430,9 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 **For example:**
 
 ```objc
-static NSString * const NYTAboutViewControllerCompanyName = @"The New York Times Company";
+static NSString * const TMFAboutViewControllerCompanyName = @"The New York Times Company";
 
-static const CGFloat NYTImageThumbnailHeight = 50.0;
+static const CGFloat TMFImageThumbnailHeight = 50.0;
 ```
 
 **Not:**
@@ -425,20 +450,20 @@ When using `enum`s, it is recommended to use the new fixed underlying type speci
 **Example:**
 
 ```objc
-typedef NS_ENUM(NSInteger, NYTAdRequestState) {
-    NYTAdRequestStateInactive,
-    NYTAdRequestStateLoading
+typedef NS_ENUM(NSInteger, TMFAdRequestState) {
+    TMFAdRequestStateInactive,
+    TMFAdRequestStateLoading
 };
 ```
 
 ## Private Properties
 
-Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `NYTPrivate` or `private`) should never be used unless extending another class.
+Private properties should be declared in class extensions (anonymous categories) in the implementation file of a class. Named categories (such as `TMFPrivate` or `private`) should never be used unless extending another class.
 
 **For example:**
 
 ```objc
-@interface NYTAdvertisement ()
+@interface TMFAdvertisement ()
 
 @property (nonatomic, strong) GADBannerView *googleAdView;
 @property (nonatomic, strong) ADBannerView *iAdView;
