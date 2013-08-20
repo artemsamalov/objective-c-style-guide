@@ -106,6 +106,31 @@ In method signatures, there should be a space after the scope (-/+ symbol). Ther
 ```objc
 - (void)setExampleText:(NSString *)text image:(UIImage *)image;
 ```
+
+The spacing before the asterisk is required. When adding new code, be consistent with the surrounding file's style.
+If you have too many parameters to fit on one line, giving each its own line is preferred. If multiple lines are used, align each using the colon before the parameter.
+
+**For Example**:
+```objc
+- (void)doSomethingWith:(GTMFoo *)theFoo
+                   rect:(NSRect)theRect
+               interval:(float)theInterval {
+  ...
+}
+```
+
+When the first keyword is shorter than the others, indent the later lines by at least four spaces, maintaining colon alignment:
+
+**For Example**:
+```objc
+- (void)short:(GTMFoo *)theFoo
+          longKeyword:(NSRect)theRect
+    evenLongerKeyword:(float)theInterval
+                error:(NSError **)theError {
+  ...
+}
+```
+
 ## Variables
 
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops.
