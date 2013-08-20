@@ -14,6 +14,7 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Conditionals](#conditionals)
   * [Ternary Operator](#ternary-operator)
 * [Methods](#methods)
+  * [Method Invocations](#method-invocations) 
 * [Variables](#variables)
 * [Naming](#naming)
   * [Underscores](#underscores)
@@ -130,6 +131,47 @@ When the first keyword is shorter than the others, indent the later lines by at 
   ...
 }
 ```
+###method-invocations
+
+Method invocations should be formatted much like method declarations. When there's a choice of formatting styles, follow the convention already used in a given source file.
+Invocations should have all arguments on one line:
+
+**For Example**:
+```objc
+[myObject doFooWith:arg1 name:arg2 error:arg3];
+```
+
+or have one argument per line, with colons aligned:
+
+```objc
+[myObject doFooWith:arg1
+               name:arg2
+              error:arg3];
+```
+
+**Not:**
+```objc
+[myObject doFooWith:arg1 name:arg2  // some lines with >1 arg
+              error:arg3];
+
+[myObject doFooWith:arg1
+               name:arg2 error:arg3];
+
+[myObject doFooWith:arg1
+          name:arg2  // aligning keywords instead of colons
+          error:arg3];
+```
+
+As with declarations and definitions, when the first keyword is shorter than the others, indent the later lines by at least four spaces, maintaining colon alignment:
+
+**For Example**:
+```objc
+[myObj short:arg1
+          longKeyword:arg2
+    evenLongerKeyword:arg3
+                error:arg4];
+```
+Invocations containing inlined blocks may have their segments left-aligned at a four space indent.
 
 ## Variables
 
