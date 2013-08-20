@@ -14,7 +14,9 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Conditionals](#conditionals)
   * [Ternary Operator](#ternary-operator)
 * [Methods](#methods)
+  * [Method Names](#method-names) 
   * [Method Invocations](#method-invocations) 
+  * [Adjectives](#adjectives)
 * [Variables](#variables)
 * [Naming](#naming)
   * [Underscores](#underscores)
@@ -131,7 +133,43 @@ When the first keyword is shorter than the others, indent the later lines by at 
   ...
 }
 ```
-###method-invocations
+
+### Method Names
+
+Method names should start as lowercase and then use mixed case. Each named parameter should also start as lowercase.
+Programmers do much more reading of code than writing, so Objective-C and Cocoa are designed to read well. Reading a message as a phrase is a good way to test your method name:
+
+**For Example**:
+```objc
+// "open the file with this application and deactivate"
+
+[finder openFile:mailing withApplication:@"MailDrop" andDeactivate:YES];
+```
+This message is sent to NSWorkspace (aka Finder), and it clearly passes the "phrase" test.
+
+### Adjectives
+
+Not all accessors return values like name, date, height, etc. Some represent a particularly quality of an object. These are often represented by BOOLs.
+
+For example, "selectable". In Objective-C, the getter for this key is called -isSelectable, but the setter is -setSelectable:
+
+**For Example**:
+```objc
+BOOL selectable = [textView isSelectable];
+BOOL editable   = [textView isEditable];
+
+[textView setSelectable:YES];    // no "is"
+[textView setEditable:YES];    // no "is"
+
+// if textview is editable.
+
+if ([textView isEditable]) {
+      [textView setEditable:NO];
+}
+```
+Keep in mind that naming your accessors according to all of these rules isn't purely an issue of clarity and aesthetics. Cocoa relies heavily on key-value coding for much of its magic, and KVC relies on properly-named accessors.
+
+### Method Invocations
 
 Method invocations should be formatted much like method declarations. When there's a choice of formatting styles, follow the convention already used in a given source file.
 Invocations should have all arguments on one line:
