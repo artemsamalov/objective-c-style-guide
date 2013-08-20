@@ -15,8 +15,9 @@ Here are some of the documents from Apple that informed the style guide. If some
   * [Ternary Operator](#ternary-operator)
 * [Methods](#methods)
   * [Method Names](#method-names) 
-  * [Method Invocations](#method-invocations) 
-  * [Adjectives](#adjectives)
+  * [Method Invocations](#method-invocations)
+  * [Returning Objects](#returning-objects)
+  * [Naming Parameters](#naming-parameters)
 * [Variables](#variables)
 * [Naming](#naming)
   * [Underscores](#underscores)
@@ -147,28 +148,6 @@ Programmers do much more reading of code than writing, so Objective-C and Cocoa 
 ```
 This message is sent to NSWorkspace (aka Finder), and it clearly passes the "phrase" test.
 
-### Adjectives
-
-Not all accessors return values like name, date, height, etc. Some represent a particularly quality of an object. These are often represented by BOOLs.
-
-For example, "selectable". In Objective-C, the getter for this key is called -isSelectable, but the setter is -setSelectable:
-
-**For Example**:
-```objc
-BOOL selectable = [textView isSelectable];
-BOOL editable   = [textView isEditable];
-
-[textView setSelectable:YES];    // no "is"
-[textView setEditable:YES];    // no "is"
-
-// if textview is editable.
-
-if ([textView isEditable]) {
-      [textView setEditable:NO];
-}
-```
-Keep in mind that naming your accessors according to all of these rules isn't purely an issue of clarity and aesthetics. Cocoa relies heavily on key-value coding for much of its magic, and KVC relies on properly-named accessors.
-
 ### Method Invocations
 
 Method invocations should be formatted much like method declarations. When there's a choice of formatting styles, follow the convention already used in a given source file.
@@ -211,6 +190,65 @@ As with declarations and definitions, when the first keyword is shorter than the
 ```
 Invocations containing inlined blocks may have their segments left-aligned at a four space indent.
 
+### Returning Objects
+
+In addition to simple accessors, classes or objects can also return objects based on various conditions or input. The format is simple:
+
+```objc
+[object/class thing+condition];
+[object/class thing+input:input];
+[object/class thing+identifer:input];
+```
+
+**For Example**:
+```objc
+realPath = [path stringByExpandingTildeInPath];
+fullString = [string stringByAppendingString:@"Extra Text"];
+object = [array objectAtIndex:3];
+
+// class methods
+newString = [NSString stringWithFormat:@"%f",1.5];
+newArray  = [NSArray  arrayWithObject:newString];
+```
+If I wrote some of my own, this is what they might look like.
+
+**For Example**:
+```objc
+recipients  = [email    recipientsSortedByLastName];
+newEmail = [CDCEmail emailWithSubjectLine:@"Extra Text"];
+emails = [mailbox  messagesReceivedAfterDate:yesterdayDate];
+```
+Note that all of these messages first indicate what kind of thing will be returned, followed by what the circumstances will be for returning it. Also note that the last word right before the colon describes the type of the supplied argument.
+
+### Naming Parameters
+
+Let's take a quick visit to method parameters. What's the standard here? The guidelines are considerably more loose, but typically you prefix the input name with `the`, `an` or `new`
+
+**For Example**:
+```objc
+- (void)setTitle:(NSString *)aTitle;
+- (void)setName:(NSString *)newName;
+- (id)keyForOption:(ASOption *)anOption;
+- (NSArray *)emailsForMailbox:(ASMailbox *)theMailbox;
+- (ASEmail *)emailForRecipients:(NSArray *)theRecipients;
+```
+
+Also worth noting is the naming convention for a loop. Typically, the current object in the loop is prefixed with `one` or `a/an`. Some also simply refer to the individual object as `item`:
+
+**For Example**:
+```objc
+for (i=0; i < count; i++) {
+    oneObject = [allObjects objectAtIndex:i];
+    NSLog (@"oneObject: %@", oneObject);
+}
+		
+NSEnumerator *e = [allObjects objectEnumerator];
+id item;
+
+while (item = [e nextObject]) {
+    NSLog (@"item: %@", item);
+}
+```
 ## Variables
 
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops.
