@@ -228,9 +228,9 @@ Let's take a quick visit to method parameters. What's the standard here? The gui
 ```objc
 - (void)setTitle:(NSString *)aTitle;
 - (void)setName:(NSString *)newName;
-- (id)keyForOption:(ASOption *)anOption;
-- (NSArray *)emailsForMailbox:(ASMailbox *)theMailbox;
-- (ASEmail *)emailForRecipients:(NSArray *)theRecipients;
+- (id)keyForOption:(TMFOption *)anOption;
+- (NSArray *)emailsForMailbox:(TMFMailbox *)theMailbox;
+- (TMFEmail *)emailForRecipients:(NSArray *)theRecipients;
 ```
 
 Also worth noting is the naming convention for a loop. Typically, the current object in the loop is prefixed with `one` or `a/an`. Some also simply refer to the individual object as `item`:
@@ -343,7 +343,6 @@ Block comments should generally be avoided, as code should be as self-documentin
     if (self) {
         // Custom initialization
     }
-
     return self;
 }
 ```
