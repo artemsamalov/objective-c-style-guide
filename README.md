@@ -393,6 +393,48 @@ NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Ka
 NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
 NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
 ```
+If the collection spans more than a single line, place the opening bracket on the same line as the declaration, indent the body by two spaces, and place the closing bracket on a new line that is indented to the same level as the opening bracket.
+
+**For example:**
+
+```objc
+NSArray* array = @[
+  @"This",
+  @"is",
+  @"an",
+  @"array"
+];
+
+NSDictionary* dictionary = @{
+  NSFontAttributeName : [NSFont fontWithName:@"Helvetica-Bold" size:12],
+  NSForegroundColorAttributeName : fontColor
+};
+```
+For dictionary literals, there should be one space before the colon and at least one space after it.
+
+**For example:**
+
+```objc
+NSDictionary* option1 = @{
+  NSFontAttributeName : [NSFont fontWithName:@"Helvetica-Bold" size:12],
+  NSForegroundColorAttributeName : fontColor
+};
+```
+
+**Not**
+
+```objc
+// There should be a space before the colon.
+NSDictionary* wrong = @{
+  AKey: @"b",
+  BLongerKey: @"c",
+};
+
+// The items should each be on a new line, or the entire expression
+// should fit on one line.
+NSDictionary* alsoWrong= @{ AKey : @"a",
+                            BLongerKey : @"b" };
+```
 
 ## CGRect Functions
 
